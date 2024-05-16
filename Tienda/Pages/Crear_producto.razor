@@ -55,6 +55,56 @@
 
 </EditForm>
 
+@if (libros != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Precio de venta</th>
+                <th>Precio de compra</th>
+                <th>Editorial</th>
+                <th>Categoria</th>
+                <th>Autor</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var libro in libros)
+            {
+                <tr>
+                    <td>@libro.Codigo</td>
+                    <td>@libro.Nombre</td>
+                    <td>@libro.Descripcion</td>
+                    <td>@libro.PrecioVenta</td>
+                    <td>@libro.PrecioCompra</td>
+                    <td>@libro.Editorial</td>
+                    <td>@libro.Categoria</td>
+                    <td>@libro.Autor</td>
+                    <td>
+                        <button class="btn btn-danger"
+                                @onclick="@(() => BorrarCatedratico(libro.Codigo))">
+                            Eliminar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning"
+                                @Referencia a la pagina de editar@
+                                @onclick="@(() => NavigationManager.NavigateTo($"/edicion/{libro.Codigo}"))">
+                            Editar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
 @code {
     private Libros libro = new Libros();
 
@@ -71,5 +121,13 @@
         //convierta la lista catedraticos en null
         //libros = await localStorage.GetItemAsync<List<Libros>>("catedraticos");
     }
+    protected async Task BorrarCatedratico(string Codigo)
+    {
+        libros.Remove(libros.First(c => c.Codigo == Codigo));
+        await localStorage.SetItemAsync("catedraticos", libros);
+
+    }
+
+
 
 }
