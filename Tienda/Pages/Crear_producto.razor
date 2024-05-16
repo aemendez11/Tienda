@@ -113,6 +113,7 @@
     protected async Task Guardar()
     {
         libros.Add(libro);
+        libro = new Libros();
         await localStorage.SetItemAsync("libros",libros);
     }
 
