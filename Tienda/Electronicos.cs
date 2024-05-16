@@ -5,7 +5,7 @@
         public int TiempoGarantia { get; set; } // en meses
         public string Voltaje { get; set; }
 
-        Electronicos()
+        public Electronicos()
         {
             TiempoGarantia=int.MinValue;
             Voltaje = string.Empty;

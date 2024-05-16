@@ -1,12 +1,12 @@
 ﻿namespace Tienda
 {
-    public class Libros
+    public class Libros:Productos_general
     {
         public string Editorial { get; set; }
         public string Categoria { get; set; }
         public string Autor { get; set; }
 
-        Libros() 
+        public Libros() 
         { 
             Editorial=string.Empty;
             Categoria=string.Empty;

@@ -5,7 +5,7 @@
         public DateTime FechaVencimiento { get; set; }
         public string UnidadMedida { get; set; }
 
-        Alimentos()
+         public Alimentos()
         {
             FechaVencimiento= DateTime.Now;
             UnidadMedida = string.Empty;

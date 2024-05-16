@@ -10,6 +10,7 @@ namespace Tienda
         public string Nombre { get; set; }
         [Required(ErrorMessage = "La Descripcion del requerido")]
         public string Descripcion { get; set; }
+     
         public decimal PrecioCompra { get; set; }
         public decimal PrecioVenta { get; set; }
 
@@ -18,8 +19,8 @@ namespace Tienda
             Codigo = string.Empty; 
             Nombre = string.Empty;  
             Descripcion = string.Empty;
-            PrecioCompra = decimal.MinValue;
-            PrecioVenta = decimal.MinValue;
+            PrecioCompra = 0;
+            PrecioVenta = 0;
         }
     }
 }

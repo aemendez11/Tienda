@@ -1,0 +1,75 @@
+﻿@page "/producto-crear"
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<h3>Producto</h3>
+<EditForm Model="@libro" OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    @* Agregar un formulario para la informacion de producto  *@
+    <div class="form-group">
+        <label for="Codigo">Codigo del producto</label>
+        <InputText id="Codigo" @bind-Value="libro.Codigo" class="form-control" />
+        <ValidationMessage For="() => libro.Codigo" />
+    </div>
+    <div class="form-group">
+        <label for="Nombre">Nombre del producto</label>
+        <InputText id="Nombre" @bind-Value="libro.Nombre" class="form-control" />
+        <ValidationMessage For="() => libro.Nombre" />
+    </div>
+    <div class="form-group">
+        <label for="Descripcion"> Descripcion del producto </label>
+        <InputText id="Descripcion" @bind-Value="libro.Descripcion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="PrecioVenta">Precio de venta del producto</label>
+        <InputNumber id="PrecioVenta" @bind-Value="libro.PrecioVenta" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="PrecioCompra">Precio de compra del producto</label>
+        <InputNumber id="PrecioCompra" @bind-Value="libro.PrecioCompra" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Editorial">Editorial del libro</label>
+        <InputText id="Editorial" @bind-Value="libro.Editorial" class="form-control" />
+        <ValidationMessage For="() => libro.Editorial" />
+    </div>
+    <div class="form-group">
+        <label for="Categoria">Categoria del libro</label>
+        <InputText id="Categoria" @bind-Value="libro.Categoria" class="form-control" />
+        <ValidationMessage For="() => libro.Categoria" />
+    </div>
+    <div class="form-group">
+        <label for="Autor">Autor del libro</label>
+        <InputText id="Autor" @bind-Value="libro.Autor" class="form-control" />
+        <ValidationMessage For="() => libro.Autor" />
+    </div>
+
+    @* opcion guardar*@
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+
+
+</EditForm>
+
+@code {
+    private Libros libro = new Libros();
+
+    List<Libros> libros = new List<Libros>();
+
+    protected async Task Guardar()
+    {
+        libros.Add(libro);
+        await localStorage.SetItemAsync("libros", libros);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {   //La primera vez que se corre poner en comentarios, pues como no existen datos
+        //convierta la lista catedraticos en null
+        //libros = await localStorage.GetItemAsync<List<Libros>>("catedraticos");
+    }
+
+}
