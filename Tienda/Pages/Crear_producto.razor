@@ -4,11 +4,12 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 <h3>Producto</h3>
+@* Agregar un formulario para la informacion de producto  *@
 <EditForm Model="@libro" OnValidSubmit="@Guardar">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    @* Agregar un formulario para la informacion de producto  *@
+    
     <div class="form-group">
         <label for="Codigo">Codigo del producto</label>
         <InputText id="Codigo" @bind-Value="libro.Codigo" class="form-control" />
@@ -46,8 +47,6 @@
         <InputText id="Autor" @bind-Value="libro.Autor" class="form-control" />
         <ValidationMessage For="() => libro.Autor" />
     </div>
-
-    @* opcion guardar*@
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
@@ -55,6 +54,7 @@
 
 </EditForm>
 
+@* agregar tabla  *@
 @if (libros != null)
 {
     <table class="table">
@@ -68,8 +68,8 @@
                 <th>Editorial</th>
                 <th>Categoria</th>
                 <th>Autor</th>
-                <th>Editar</th>
                 <th>Eliminar</th>
+                <th>Editar</th>
 
             </tr>
         </thead>
@@ -85,16 +85,17 @@
                     <td>@libro.Editorial</td>
                     <td>@libro.Categoria</td>
                     <td>@libro.Autor</td>
+                   
                     <td>
                         <button class="btn btn-danger"
-                                @onclick="@(() => BorrarCatedratico(libro.Codigo))">
+                                @onclick="@(() => Borrar(libro.Autor))">
                             Eliminar
                         </button>
                     </td>
                     <td>
                         <button class="btn btn-warning"
-                                @Referencia a la pagina de editar@
-                                @onclick="@(() => NavigationManager.NavigateTo($"/edicion/{libro.Codigo}"))">
+
+                                @onclick="@(() => NavigationManager.NavigateTo($"/producto-editar/{libro.Autor}"))">
                             Editar
                         </button>
                     </td>
@@ -107,24 +108,23 @@
 
 @code {
     private Libros libro = new Libros();
-
     List<Libros> libros = new List<Libros>();
 
     protected async Task Guardar()
     {
         libros.Add(libro);
-        await localStorage.SetItemAsync("libros", libros);
+        await localStorage.SetItemAsync("libros",libros);
     }
 
     protected override async Task OnInitializedAsync()
     {   //La primera vez que se corre poner en comentarios, pues como no existen datos
         //convierta la lista catedraticos en null
-        //libros = await localStorage.GetItemAsync<List<Libros>>("catedraticos");
+        libros = await localStorage.GetItemAsync<List<Libros>>("libros");
     }
-    protected async Task BorrarCatedratico(string Codigo)
+    protected async Task Borrar(string Autor)
     {
-        libros.Remove(libros.First(c => c.Codigo == Codigo));
-        await localStorage.SetItemAsync("catedraticos", libros);
+        libros.Remove(libros.First(c => c.Autor == Autor));
+        await localStorage.SetItemAsync("libros",libros);
 
     }
 
